@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+	// 1.外层的变量，内层可以找到(全局)，内层的变量，外层找不到(局部)
+		// var a = 10;
+		// function aaa(){
+		// 	alert(a);
+		// }
+
+		// function bbb(){
+		// 	var a = 20;
+		// 	aaa();
+		// }
+
+		// bbb();//10
+
+	// 2.当var不加的时候，会自动生成全局的变量(不建议这样写，最好把所有要定义的变量加上var)
+		// function aaa(){
+		// 	var a = b = 10;
+		// }
+
+		// aaa();
+		// alert(a);//uncaught referenceError
+		// alert(b);//10
+
+
+	// 3.变量的查找时就近原则去寻找var定义的变量，当就近没有找到的话，就会查找外层
+		// var a = 10;
+		// function aaa(){
+		// 	alert(a);//undefined
+		// 	var a = 20;
+		// }
+		// aaa();
+
+		// var a = 10;
+		// function aaa(){
+		// 	var a = 20;
+		// 	alert(a);//20
+		// }
+		// aaa();
+
+		// var a = 10;
+		// function aaa(){
+		// 	a = 20;
+		// 	alert(a);//20
+		// }
+		// aaa()
+
+		// var a = 10;
+		// function aaa(){
+		// 	alert(a);//10
+		// 	a = 20;
+		// }
+		// aaa();
+
+		// var a = 10;
+
+		// function aaa() {
+			
+		// 	bbb();
+
+		// 	alert(a);//10
+
+		// 	function bbb(){
+		// 		var a = 20;
+		// 	}
+		// }
+		// aaa();
+
+	// 4.当参数跟局部变量重名的时候，优先级是等同的
+		// var a = 10;
+		// function aaa(a) {
+		// 	alert(a); //10
+		// 	var a = 20;
+		// }
+
+		// aaa(a);
+	</script>
+</body>
+</html>
