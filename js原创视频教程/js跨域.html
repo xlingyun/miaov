@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>js的跨域</title>
+</head>
+<body>
+	<!-- jsonp: json + padding(内填充) -->
+	<!-- ajax: XMLHttpRequest(); : 不能跨域的 -->
+	<!-- 1.document.domain = 'a.com';
+	2.服务器代理： XMLHttpRequest代理文件
+	3.script标签：jsonp
+	4.location.hash 
+	5.window.name
+	6.flash
+	7.html5 postMessage-->
+	<script>
+		function createJs(sUrl) {
+			var oScript = document.createElement('script');
+			oScript.type = 'text/javascript';
+			oScript.src = sUrl;
+			document.getElementsByTagName('head')[0].appendChild(oScript);
+		}
+
+		// createJs('jsonp.js');
+		createJs('jsonp.js?callback=fn')
+
+		// 在本页面写一个与fn一样的函数接受数据，
+		function box(json){
+			alert(json.name);
+		}
+	</script>
+</body>
+</html>

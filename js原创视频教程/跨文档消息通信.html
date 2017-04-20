@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>跨文档消息通信</title>
+	<style>
+		#div1{
+			width: 300px;
+			height: 30px;
+			border: 1px solid #000;
+			position: relative;
+		}
+		#div2{
+			width: 0;
+			height: 30px;
+			background-color: #ccc;
+		}
+		#div3{
+			position: absolute;
+			width: 300px;
+			height: 30px;
+			line-height: 30px;
+			text-align: center;
+			left: 0;
+			top: 0;
+		}
+	</style>
+</head>
+<body>
+	<!-- <input type="button" id="btn"> -->
+	<input type="file" id="myFile" /><input type="button" value="上传" id="btn">
+	<div id="div1">
+		<div id="div2"></div>
+		<div id="div3">0.00</div>
+	</div>
+	
+	<!-- 
+	在标准浏览器下，XMLHttpRequest对象已经是升级版本，支持了更多的特性，可以跨域了，但是，如果想实现跨域请求，还需要后端的相关配合才可以（服务端设置请求头header('Access-Control-Allow-Origin:http://www.a.om');//允许访问该域的资源） 
+	
+	XMLHttpRequest: 增加了很多功能，他也不推荐使用onreadystatechange这个事件来监听，推荐使用onload
+
+	XDomainRequest:IE如果想实现跨域请求，则需要使用另外一个对象去实现
+	-->
+
+	<script>
+		window.onload = function(){
+
+			// var oBtn = document.getElementById('btn');
+	
+			// oBtn.onclick = function(){
+			// 	var xhr = new XMLHttpRequest();
+			// 	xhr.onreadystatechange = function(){
+			// 		if(xhr.readyState == 4 && xhr.status == 200){
+			// 			alert(xhr.responseText);
+			// 		}
+			// 	}
+			// 	xhr.open('get', 'http://www.b.com/ajax.php', true);
+			// 	xhr.send();
+
+
+			// 	var oXDomainRequest = new XDomainRequest();
+			// 	oXDomainRequest.onload = function(){
+			// 		alert(this.responseText);
+			// 	}
+			// 	oXDomainRequest.open('get', 'http://www.b.com/ajax.php', true);
+			// 	oXDomainRequest.send();
+			// }
+
+
+			
+			
+
+			var oBtn = document.getElementById('btn');
+			var oMyFile = document.getElementById('myFile');
+			var oDiv1 = document.getElementById('div1');
+			var oDiv2 = document.getElementById('div2');
+			var oDiv3 = document.getElementById('div3');
+				
+			oBtn.onclick = function(){
+				// alert(oMyFile.value);//获取到的是file控件的value值，这个内容是现实给你看的文字，不是我们选择的文件
+				
+				// oMyFile.files file控件中选择的的文件列表对象
+				// console.log(oMyFile.files, oMyFile.files[0]);
+				
+
+				// 我们是要通过ajax把oMyFile.files[0]数据发送给后端
+				// for(var attr in oMyFile.files[0]){
+				// 	console.log(attr + ' : ' + oMyFile.files[0][attr])
+				// }
+			
+				var xhr = new XMLHttpRequest();
+				xhr.onload = function(){
+					// alert(1);
+					var d = JSON.parse(this.responseText);
+
+					console.log(d.msg + ' : ' + d.url);
+				}
+
+				var oUpload = xhr.upload;
+				oUpload.onprogress = function(ev) {
+					// console.log(ev.total + ' : ' + ev.loaded);
+					var iScale = (ev.loaded / ev.total).toFixed(2);
+					oDiv2.style.width = 300 * iScale + 'px';
+					oDiv3.innerHTML = iScale * 100 + '%';
+				}
+				xhr.open('post', 'post_file.php', true);
+				xhr.setRequestHeader('X-Request-With', 'XMLHttpRequest');
+
+				var oFormData = new FormData();
+				oFormData.append('file', oMyFile.files[0])
+				xhr.send(oFormData);
+			}
+		}
+	</script>
+</body>
+</html>

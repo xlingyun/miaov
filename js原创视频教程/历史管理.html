@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>时时彩3码</title>
+</head>
+<body>
+	<script type="text/javascript">
+
+		// onhashchange:事件：当hash值有变化的时候，就会触发
+		window.onload = function(){
+			var oInput = document.getElementById('input1');
+			var oDiv = document.getElementById('div1');
+			var str = '';
+			// var obj =  {};
+		
+			for(var i=1;i<=120;i++){
+
+				var number = randomNum(10, 3);
+				str +=  styleNum(i) + number + '<br/>';
+				
+				// var oRD = Math.random();
+
+				// obj[oRD] = number;
+
+				// window.location.hash = oRD;
+				
+				// history.pushState(number, ''); 
+				
+			}
+			oDiv.innerHTML = str;
+			
+
+			// window.onhashchange = function(){
+
+			// 	var number = obj[window.location.hash.substring(1)] || '';
+
+			// 	oDiv.innerHTML = number;
+			// }
+			
+			// window.onpopstate = function(ev) {
+			// 	// var number = ev.state || '';
+			// 	// oDiv.innerHTML = number;
+			// 	console.log(ev.state);
+			// }
+			function styleNum(num){
+				if(num < 10 && num > 0){
+					return '第00' + num + '期：';
+				}else if(num >= 10 && num <= 99){
+					return '第0' + num + '期：';
+				}else{
+					return '第' + num + '期：';
+				}
+			}
+			function randomNum(alls, now){
+				
+				var arr = [];
+				var newArr = [];
+
+				for(var i=0;i<alls;i++){
+					arr.push(i);
+				}
+				
+				for(var i=0;i<now;i++){
+					newArr.push( arr.splice(Math.floor(Math.random()*arr.length), 1));
+				}
+
+				return newArr.sort(function(a, b){
+					return a - b;
+				}).join(' ');
+			}
+		}
+	</script>
+	<!-- <input type="button" value="10选3" id="input1"> -->
+	<div id="div1"></div>
+</body>
+</html>

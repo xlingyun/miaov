@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>js闭包</title>
+</head>
+<body>
+<script>
+// 函数嵌套函数，内部函数可引用外部函数的参数和变量,参数和变量不会被垃圾回收机制所收回
+
+// 好处：
+// 1.希望一个变量长期驻扎在内存当中
+// 2.避免全局变量的污染
+// 3.私有成员的存在
+// 
+// 需要注意的地方
+// IE下会引发内存泄漏
+// 用法：
+// 1.模块化代码
+	window.onload = function(){		
+		// function aaa(a){
+		// 	var b = 5;
+
+		// 	function bbb(){
+		// 		alert(a);
+		// 		alert(b);
+		// 	}
+		// }
+
+		// aaa();
+
+		// JS中的垃圾回收机制
+		// function aaa(){
+		// 	var a = 1;
+		// }
+		// aaa();
+		
+
+		// function aaa(){
+		// 	var a = 5;
+		// 	function bbb(){
+		// 		alert(a);
+		// 	}
+		// 	return bbb;
+		// }
+		// var c = aaa();
+		// c();
+		
+
+		// function aaa(){
+		// 	var a = 1;
+		// 	return function(){
+		// 		a++;
+		// 		alert(a);
+		// 	}
+		// }
+		// var b = aaa();
+		// b();
+		// b();
+	
+
+		// var aaa = (function(){
+		// 	var a = 1;
+		// 	return function(){
+		// 		a++;
+		// 		alert(a);
+		// 	}
+		// })();
+		// aaa();
+		// aaa();
+	
+
+		// var aaa = (function(){
+		// 	var a = 1;
+		// 	function bbb(){
+		// 		a++;
+		// 		alert(a);
+		// 	}
+		// 	function ccc(){
+		// 		a++;
+		// 		alert(a);
+		// 	}
+		// 	return {
+		// 		b: bbb,
+		// 		c: ccc,
+		// 	}
+		// })()
+		// aaa.b();
+		// aaa.c();
+		// 
+		
+		// var oLi = document.getElementsByTagName('li');
+		// for(var i=0,len=oLi.length;i<len;i++){
+		// 	// oLi[i].onclick = function(){
+		// 	// 	console.log(i);
+		// 	// } //3
+			
+		// 	(function(i){
+		// 		oLi[i].onclick = function(){
+
+		// 			console.log(this, i);
+		// 		}
+		// 	})(i)
+			 
+		// 	// oLi[i].onclick = (function(i){
+		// 	// 	return function(){
+		// 	// 		console.log(i);
+		// 	// 	}
+		// 	// })(i)
+		// }
+		
+
+
+		// IE下会引发内存泄漏
+		var oDiv = document.getElementById('div1');
+		oDiv.onclick = function(){
+			alert(oDiv.id);
+		} 
+		// 防止内存泄漏
+		// 方法一
+		window.onunload = function(){
+			oDiv.onclick = null;
+		}
+		// 方法二
+		var id = oDiv.id;
+		oDiv.onclick = function(){
+			alert(id);
+		};
+		oDiv = null;
+		
+	}
+</script>
+
+<ul>
+		<li>00001</li>
+		<li>00002</li>
+		<li>00003</li>
+	</ul>	
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>本地存储</title>
+</head>
+<body>
+	<input type="button" value="设置">
+	<input type="button" value="获取">
+	<input type="button" value="删除">
+	<input type="text">
+	<script>
+	// storage 存储
+	// sessionStorage 
+	// 	-session临时会话，从页面打开到页面关闭的时间段
+	// 	-窗口的临时存储，页面关闭，本地存储消失
+	// 	-session同窗口才可以，例子：iframe操作
+	// localStorage
+	// 	-永久存储（可以手动删除数据）
+	// storage的特点
+	//  -存储量限制（5M）
+	//  -客户端完成，不会请求服务器处理
+	//  -sessionStorage数据是不共享、localStorage共享
+	// 
+		window.onload = function(){
+			// var aInput = document.querySelectorAll('input');
+			
+			// aInput[0].onclick = function(){
+
+			// 	// sessionStorage:临时性存储
+			// 	// localStorage:永久性存储
+				
+			// 	// window.sessionStorage.setItem('name', aInput[3].value);
+			// 	window.localStorage.setItem('name', aInput[3].value);
+			// }
+
+			// aInput[1].onclick = function(){
+			// 	// alert(window.sessionStorage.getItem('name'));
+				
+			// 	alert(window.localStorage.getItem('name'));//通过key来获取到相应的value
+			// }
+
+			// aInput[2].onclick = function(){
+			// 	window.localStorage.removeItem('name');//通过key来删除相应的value
+			// 	// window.localStorage.clear();//删除全部数据
+			// }
+
+			// window.addEventListener('storage',function(ev){
+			// 	// 当数据有修改或删除的情况下，就会触发storage事件
+			// 	// 在对数据进行修改的窗口对象上是不会触发的
+			// 	//当前页面的事件不会触发
+			// 	// alert(1234);
+			// 	console.log(ev.key);
+			// 	console.log(ev.newValue);
+			// 	console.log(ev.oldValue);
+			// 	console.log(ev.storageArea);
+			// 	console.log(ev.url);
+			// },false)
+			
+		}
+	</script>
+
+</body>
+</html>

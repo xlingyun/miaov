@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>DOM优化</title>
+</head>
+<body>
+<style>
+	#div1{width:100px;height:100px;background:red;position:absolute;}
+</style>
+<script type="text/javascript">
+
+// chrome:dom方法要比innerHTML性能要好
+// 
+// DOM优化
+// 减少DOM操作
+// 节点克隆。-cloneNode
+// 访问元素集合。-尽量用局部变量
+// 元素节点。 -尽量用只获取元素的节点方法
+// 选择器API。-利用querySelector、querySelectorAll
+
+	window.onload = function(){
+		// var oDiv = document.getElementById('div1');
+		// var str = '';
+
+		/**
+		console.time('hello');
+		for(var i=0;i<5000;i++){
+			oDiv.innerHTML += 'a';
+		}
+		console.timeEnd('hello');
+		// hello: 178ms
+		*/
+		
+		// console.time('hello');
+		// for(var i=0;i<5000;i++){
+		// 	str += 'a';
+		// }
+		// oDiv.innerHTML = str;
+		// console.timeEnd('hello');
+		// hello: 0.487ms 比上面的性能提高百倍不止
+		// 
+		// 
+		
+		// var oUl = document.getElementById('ul1');
+
+		// var str = '';
+
+		// console.time('hello');
+		// for(var i=0;i<5000;i++){
+		// 	var oLi = document.createElement('li');
+		// 	oLi.innerHTML = 'li';
+		// 	oUl.appendChild(oLi);
+		// }
+		// console.timeEnd('hello');//40ms
+
+		// console.time('hello');
+		// for(var i=0;i<5000;i++){
+			
+		// 	str += '<li></li>';
+		// }
+		// oUl.innerHTML = str;
+		// console.timeEnd('hello');//8~10ms
+
+		// console.time('hello');
+		// var oLi = document.createElement('li');
+		// oLi.innerHTML = 'li';
+		// for(var i=0;i<5000;i++){
+		// 	var newLi = oLi.cloneNode(true);
+		// 	oUl.appendChild(newLi);
+		// }
+		// console.timeEnd('hello');//8~10ms
+
+		// var oUl = document.getElementById('ul1');
+		// var aLi = document.getElementsByTagName('li');
+		
+		// var doc = document;
+		// var oUl = doc.getElementById('ul1');
+		// var aLi = doc.getElementsByTagName('li'); 
+		
+		// for(var i=0;i<5000;i++){
+		// 	var oLi = document.createElement('li');
+		// 	oUl.appendChild(oLi);
+		// }
+		// console.time('hello');
+		// for(var i=0;i<aLi.length;i++){
+		// 	aLi[i].innerHTML = 'li';
+		// }
+		// console.timeEnd('hello');//319~337
+
+		// console.time('hello');
+		// var len = aLi.length;
+		// for(var i=0;i<len;i++){
+		// 	aLi[i].innerHTML = 'li';
+		// }
+		// console.timeEnd('hello');//376~420
+		// 
+		
+		// var oUl = document.getElementById('ul1');
+		// var aLi = oUl.getElementsByTagName('li');
+
+		// var aLi = document.querySelectorAll('#ul1 li');//上面两句代码跟下面功能一样，但是下面性能比上面要好
+		// 
+		
+
+
+// DOM与浏览器
+// 重排：改变页面的内容
+// 重绘：浏览器显示内容
+// 添加顺序
+// ---尽量在appendChild前添加操作
+// 合并dom操作
+// ---利用cssText
+// 缓存布局信息
+// 文档碎片
+// ---createDocumentFragment()
+// 
+// 
+		// var oUl = document.getElementById('ul1');
+		// console.time('hello');
+		// for(var i=0;i<5000;i++){
+		// 	var oLi = document.createElement('li');
+		// 	oUl.appendChild(oLi);
+		// 	oLi.innerHTML = 'li';
+		// }
+		// console.timeEnd('hello');
+
+		// console.time('hello');
+		// for(var i=0;i<5000;i++){
+		// 	var oLi = document.createElement('li');
+		// 	oLi.innerHTML = 'li';
+		// 	oUl.appendChild(oLi);
+		// }
+		// console.timeEnd('hello');
+	
+		// var oUl = document.getElementById('ul1');
+		// console.time('hello');
+		// for(var i=0;i<5000;i++){
+		// 	var oLi = document.createElement('li');
+		// 	// oLi.style.width = '100px';
+		// 	// oLi.style.height = '100px';
+		// 	// oLi.style.background = 'red';
+		// 	oLi.style.cssText = 'width:100px;height:100px;background:red;';
+		// 	oUl.appendChild(oLi);
+		// }
+		// console.timeEnd('hello');
+	
+		// var oDiv = document.getElementById('div1');
+
+		// setInterval(function(){
+		// 	oDiv.style.left = oDiv.offsetLeft + 1 + 'px';
+		// 	oDiv.style.top = oDiv.offsetTop + 1 + 'px';
+		// }, 16);
+
+		// var L = oDiv.offsetLeft;
+		// var T = oDiv.offsetTop;
+		// setInterval(function(){
+		// 	L++;
+		// 	T++;
+		// 	oDiv.style.left = L + 'px';
+		// 	oDiv.style.top = T + 'px';
+		// }, 16);
+		
+
+		// var oUl = document.getElementById('ul1');
+		// var oFrag = document.createDocumentFragment();//相当于创建了一个袋子
+
+		// console.time('hello');
+		// for(var i=0;i<10000;i++){
+		// 	var oLi = document.createElement('li');
+		// 	oUl.appendChild(oLi);
+		// }
+		// console.timeEnd('hello');
+
+		// console.time('hello');
+		// for(var i=0;i<10000;i++){
+		// 	var oLi = document.createElement('li');
+		// 	oFrag.appendChild(oLi);
+		// }
+		// oUl.appendChild(oFrag);
+		// console.timeEnd('hello');
+// Dom与事件
+//   事件委托
+// Dom与前端模版
+//   能更好的对逻辑和视图分离，MVC架构的基础
+
+	}
+</script>
+	<div id="div1"></div>
+	<ul id="ul1"></ul>
+</body>
+</html>

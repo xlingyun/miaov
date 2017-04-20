@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>基于地图信息的应用</title>
+	<style>
+		#div1{
+			width: 400px;
+			height: 400px;
+			border: 1px solid #000;
+		}
+	</style>
+</head>
+<body>
+<script src="http://api.map.baidu.com/api?v=2.0&ak=UwkLDD6t6XfWMF1GEx99yRFb"></script>
+	<script>
+		window.onload = function(){
+			var oInput = document.getElementById('input1');
+			var oT = document.getElementById('t1');
+			var timer = null;
+
+			oInput.onclick = function(){
+				// 单次定位请求
+				// navigator.geolocation.getCurrentPosition(function(position){
+				// 	oT.value += '经度：' + position.coords.longitude + '\n';
+				// 	oT.value += '维度：' + position.coords.latitude + '\n';
+				// 	oT.value += '准确度：' + position.coords.accuracy + '\n';
+				// 	oT.value += '海拔：' + position.coords.altitude + '\n';
+				// 	oT.value += '海拔准确度：' + position.coords.altitudeAcuracy + '\n';
+				// 	oT.value += '行进方向：' + position.coords.heading + '\n';
+				// 	oT.value += '地面速度：' + position.coords.speed + '\n';
+				// 	oT.value += '时间戳：' + new Date(position.timestamp) + '\n';
+				// },function(err){
+				// 	// 请求失败函数
+				// 	// 失败编号： code
+				// 	// 0：不包括其他错误编号中的错误
+				// 	// 1:用户拒绝浏览器获取位置信息
+				// 	// 2:尝试获取用户信息，但失败了
+				// 	// 3:设置了timeout值，获取位置超时了
+				// 	console.log(err.code);
+				//  },{//数据收集：json的形式
+				// 	enableHighAcuracy: true,//更精确的查找，默认false
+				// 	timeout: 5000,//获取位置允许最长时间，默认infinity
+				// 	maximumAge: 5000//位置可以缓存的最大时间，默认0
+				// });
+				
+
+				// 监听位置变化，移动端使用
+				// timer = navigator.geolocation.watchPosition(function(position){
+				// 	oT.value += '经度：' + position.coords.longitude + '\n';
+				// 	oT.value += '维度：' + position.coords.latitude + '\n';
+				// 	oT.value += '准确度：' + position.coords.accuracy + '\n';
+				// 	oT.value += '海拔：' + position.coords.altitude + '\n';
+				// 	oT.value += '海拔准确度：' + position.coords.altitudeAcuracy + '\n';
+				// 	oT.value += '行进方向：' + position.coords.heading + '\n';
+				// 	oT.value += '地面速度：' + position.coords.speed + '\n';
+				// 	oT.value += '时间戳：' + new Date(position.timestamp) + '\n';
+				// },function(err){
+				// 	// 请求失败函数
+				// 	// 失败编号： code
+				// 	// 0：不包括其他错误编号中的错误
+				// 	// 1:用户拒绝浏览器获取位置信息
+				// 	// 2:尝试获取用户信息，但失败了
+				// 	// 3:设置了timeout值，获取位置超时了
+				// 	alert(err.code);
+				// 	navigator.geolocation.clearWatch(timer);
+				//  },{//数据收集：json的形式
+				// 	enableHighAcuracy: true,//更精确的查找，默认false
+				// 	timeout: 5000,//获取位置允许最长时间，默认infinity
+				// 	maximumAge: 5000//位置可以缓存的最大时间，默认0
+				// 	frequency: 1000// 更新的频率
+				// })
+				
+
+
+				navigator.geolocation.getCurrentPosition(function(position){
+					var x = position.coords.longitude;
+					var y = position.coords.latitude;
+
+					var map = new BMap.Map("div1");
+					var pt = new BMap.Point(x, y);
+
+					map.centerAndZoom(pt, 14);
+					map.enableScrollWheelZoom();
+					// var marker1 = new BMap.Marker(pt);//创建标注
+					// map.addOverlay(marker1);
+
+					var myIcon = new BMap.Icon("me.JPG", new BMap.Size(30,30));
+					var marker2 = new BMap.Marker(pt, {icon: myIcon});
+					map.addOverlay(marker2);
+
+					var opts = {
+						width: 200,  //信息窗口宽度
+						height: 60,  //信息窗口高度
+						title: "我住的地方" //信息窗口标题
+					}
+					var infoWindow = new BMap.InfoWindow("我的大本营", opts);  //创建信息窗口对象
+					map.openInfoWindow(infoWindow, pt); //开启窗口信息
+				},function(err){
+					alert(err.code);
+				}) 
+			}
+		}
+	</script>
+	<input type="button" value="请求" id="input1"><br />
+	<!-- <textarea id="t1" style="width:400px;height:400px;border:1px solid #000;"></textarea> -->
+	<div id="div1"></div>
+
+</body>
+</html>
